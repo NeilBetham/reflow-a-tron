@@ -1,7 +1,4 @@
 #include "loop.h"
-#include "tasks.h"
-#include "../drivers/pwr.h"
-#include <stdio.h>
 
 // This variable keeps track of the number of iterations that have progressed in the task loop
 uint16_t loop_count = 1;
