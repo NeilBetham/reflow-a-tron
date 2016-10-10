@@ -1,7 +1,9 @@
 #include "pid.h"
 
 void run_pid(){
-	PIDCalc(100, 100);
+	static volatile int16_t set = 100;
+	static volatile int16_t actual = 90;
+	PIDCalc(set, actual);
 }
 
 void PIDCalc(int16_t set_point, int16_t actual_measurement){
@@ -10,12 +12,14 @@ void PIDCalc(int16_t set_point, int16_t actual_measurement){
 	int32_t error = 0;				// Q2
 	int32_t derivative = 0;			// Q16
 	int32_t output = 0;				// Q16
+	int32_t kif = (ki * dt) >> 16;  // Q16 - Scale then integrate
 	
 	// Calculate P, I, D
 	// Proportion
-	error = (set_point << 2) - actual_measurement;
+	error = set_point - actual_measurement;
 	
 	// Integral
+	
 	integral += ((error) * dt) >> 2;
 	// Windup guard
 	if(integral < -(windup_guard)){
@@ -28,7 +32,7 @@ void PIDCalc(int16_t set_point, int16_t actual_measurement){
 	derivative = ((error - prev_error) << 16) / dt;
 	
 	// Control output
-	pid_control_output = ((kp * error) >> 2) + ((ki * integral) >> 16) + ((kd * derivative) >> 16);
+	pid_control_output = ((kp * error) >> 16) + ((ki * integral) >> 16) + ((kd * derivative) >> 16);
 	
 	// Setup prev_error for next iteration
 	prev_error = error;
