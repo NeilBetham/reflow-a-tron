@@ -2,6 +2,7 @@
 #include <avr/io.h>
 #include <avr/wdt.h>
 #include "../drivers/timer.h"
+#include "../drivers/spi.h"
 
 /* Init function for any general initialization that needs to be done */
 void init(){
@@ -14,4 +15,7 @@ void init(){
 	
 	/* timer init */
 	timer_init();
+	
+	// SPI Init
+	init_spi();
 }

@@ -5,6 +5,7 @@
 void onems_task();
 void tenms_task();
 void hunderedms_task();
+void fivehunderedms_task();
 void ones_task();
 
 #endif

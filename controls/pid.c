@@ -12,7 +12,7 @@ void PIDCalc(int16_t set_point, int16_t actual_measurement){
 	int32_t error = 0;				// Q2
 	int32_t derivative = 0;			// Q16
 	int32_t output = 0;				// Q16
-	int32_t kif = (ki * dt) >> 16;  // Q16 - Scale then integrate
+	int32_t kif = (ki * (int32_t)dt) >> 16;  // Q16 - Scale then integrate
 	
 	// Calculate P, I, D
 	// Proportion
