@@ -16,14 +16,17 @@ void read_from_spi();
 
 typedef union {
 	struct {
+		uint16_t data;
+	};
+	struct {
 		uint8_t bytes[2];
 	};
 	struct {
-		int dummy_sign:1;
-		int temp_reading:12;
-		int thermo_input:1;
-		int device_id:1;
-		int state:1;
+		uint16_t state:1;
+		uint16_t device_id:1;
+		uint16_t thermo_input:1;
+		uint16_t temp_reading:12;
+		uint16_t dummy_sign:1;
 	};
 } temp_reading_t;
 

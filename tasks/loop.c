@@ -23,6 +23,10 @@ void task_loop() {
 		hunderedms_task();
 	}
 	
+	if(loop(500)){
+		fivehunderedms_task();
+	}
+	
 	if(loop(1000)){
 		ones_task();
 		loop_count = 1;

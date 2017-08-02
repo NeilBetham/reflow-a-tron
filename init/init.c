@@ -3,6 +3,7 @@
 #include <avr/wdt.h>
 #include "../drivers/timer.h"
 #include "../drivers/spi.h"
+#include "../drivers/uart.h"
 
 /* Init function for any general initialization that needs to be done */
 void init(){
@@ -18,4 +19,7 @@ void init(){
 	
 	// SPI Init
 	init_spi();
+	
+	// UART Init
+	init_uart();
 }
