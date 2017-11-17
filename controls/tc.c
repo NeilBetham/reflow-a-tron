@@ -1,18 +1,14 @@
 #include "tc.h"
 
-typedef struct {
-	uint16_t dummy_sign_bit: 1;
-	uint16_t temp_reading: 12;
-	uint16_t tc_input: 1;
-	uint16_t device_id: 1;
-	uint16_t state: 1;
-} tc_data;
-
-typedef union   {
-	uint16_t raw;
-	tc_data data;
-} tc_reading;
-
 void read_tc(){
+	char print_temp[140] = {0};
+	read_from_spi(2, &(current_temp.bytes));
 	
+	volatile uint32_t num = current_temp.temp_reading * (uint32_t)1023;
+	
+	volatile ldiv_t temp_output = ldiv(num, 4096);
+	volatile int32_t fractional = (((int32_t)temp_output.rem * (int32_t)10) / (int32_t)4096);
+	
+	sprintf(&print_temp, "Current Temp: %li.%i C\n\r", temp_output.quot, fractional);
+	print(&print_temp);
 }

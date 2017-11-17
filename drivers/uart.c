@@ -20,6 +20,14 @@ void writeBytes(uint8_t *bytes, uint8_t count){
 	}
 }
 
+void print(char* string){
+	while(!(UCSR0A & (1<<UDRE0)));
+	for(int i = 0; string[i] != 0; i++){
+		UDR0 = string[i];
+		while(!(UCSR0A & (1<<UDRE0)));
+	}
+}
+
 void handleData(){
 	
 }

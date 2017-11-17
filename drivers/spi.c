@@ -18,12 +18,23 @@ void init_spi(){
 	);
 }
 
-void read_from_spi(){
+void read_from_spi(int num_of_bytes, uint8_t* recv_buffer){
 	PORT_SPI &= ~(1<<DD_CS);
-	for(int i = 0; i < 2; i++){
+	for(int i = 0; i < num_of_bytes; i++){
 		SPDR = 0x00;
 		while((SPSR & (1<<SPIF)) == 0);
-		current_temp.bytes[1 - i] = SPDR;
+		recv_buffer[num_of_bytes - i - 1] = SPDR;
+	}
+	PORT_SPI |= (1<<DD_CS);
+}
+
+
+void send_to_spi(int num_of_bytes, uint8_t* recv_buffer, uint8_t* send_buffer){
+	PORT_SPI &= ~(1<<DD_CS);
+	for(int i = 0; i < num_of_bytes; i++){
+		SPDR = send_buffer[i];
+		while((SPSR & (1<<SPIF)) == 0);
+		recv_buffer[num_of_bytes - i - 1] = SPDR;
 	}
 	PORT_SPI |= (1<<DD_CS);
 }

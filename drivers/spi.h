@@ -1,5 +1,6 @@
 #include "../config.h"
 #include "avr/io.h"
+#include <stdint.h>
 
 #ifndef SPI_H_
 #define SPI_H_
@@ -12,24 +13,7 @@
 #define DD_CS		DDB4
 
 void init_spi();
-void read_from_spi();
-
-typedef union {
-	struct {
-		uint16_t data;
-	};
-	struct {
-		uint8_t bytes[2];
-	};
-	struct {
-		uint16_t state:1;
-		uint16_t device_id:1;
-		uint16_t thermo_input:1;
-		uint16_t temp_reading:12;
-		uint16_t dummy_sign:1;
-	};
-} temp_reading_t;
-
-temp_reading_t current_temp;
+void read_from_spi(int number_of_bytes, uint8_t* recv_buffer);
+void send_to_spi(int number_of_bytes, uint8_t* recv_buffer, uint8_t* send_buffer);
 
 #endif /* SPI_H_ */

@@ -1,6 +1,6 @@
 #include "avr/io.h"
 #include "../controls/pid.h"
-#include "../drivers/spi.h"
+#include "../controls/tc.h"
 #include "../drivers/uart.h"
 
 void onems_task(){
@@ -16,9 +16,7 @@ void hunderedms_task(){
 }
 
 void fivehunderedms_task(){
-	read_from_spi();
-	
-	writeBytes("HelloWorld\n\r", 13);
+	read_tc();
 }
 
 void ones_task(){
