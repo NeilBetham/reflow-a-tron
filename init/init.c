@@ -4,6 +4,7 @@
 #include "../drivers/timer.h"
 #include "../drivers/spi.h"
 #include "../drivers/uart.h"
+#include "../drivers/pwm.h"
 
 /* Init function for any general initialization that needs to be done */
 void init(){
@@ -22,4 +23,8 @@ void init(){
 	
 	// UART Init
 	init_uart();
+	
+	// PWM Init
+	init_pwm();
+	pwm_set_period(100);
 }

@@ -1,9 +1,9 @@
+#ifndef SPI_H_
+#define SPI_H_
+
 #include "../config.h"
 #include "avr/io.h"
 #include <stdint.h>
-
-#ifndef SPI_H_
-#define SPI_H_
 
 #define DDR_SPI		DDRB
 #define PORT_SPI	PORTB

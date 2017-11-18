@@ -1,9 +1,8 @@
-#include <stdint.h>
-#include "../drivers/spi.h"
-#include "../drivers/uart.h"
-
 #ifndef TC_H_
 #define TC_H_
+
+#include <stdint.h>
+#include "../drivers/spi.h"
 
 typedef union {
 	uint16_t data;
@@ -18,5 +17,7 @@ typedef union {
 } temp_reading_t;
 
 volatile temp_reading_t current_temp;
+
+void read_tc();
 
 #endif /* TC_H_ */ 

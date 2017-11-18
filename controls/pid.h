@@ -1,12 +1,13 @@
-#include "../config.h"
-#include <math.h>
-#include <stdint.h>
-
 #ifndef PID_H_
 #define PID_H_
 
-static volatile int32_t pid_control_output = 0;
+#include "../config.h"
+#include "tc.h"
+#include <math.h>
+#include <stdint.h>
+
 
 void run_pid();
+int32_t get_pid_output();
 
 #endif
