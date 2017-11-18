@@ -1,19 +1,13 @@
 #include <stdint.h>
 #include "../drivers/spi.h"
 #include "../drivers/uart.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 #ifndef TC_H_
 #define TC_H_
 
 typedef union {
-	struct {
-		uint16_t data;
-	};
-	struct {
-		uint8_t bytes[2];
-	};
+	uint16_t data;
+	uint8_t bytes[2];
 	struct {
 		uint16_t state:1;
 		uint16_t device_id:1;

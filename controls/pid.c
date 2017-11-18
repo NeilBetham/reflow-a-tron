@@ -1,39 +1,49 @@
 #include "pid.h"
 
+int32_t PIDCalc(int16_t, int16_t);
+
 void run_pid(){
-	static volatile int16_t set = 100;
-	static volatile int16_t actual = 90;
-	PIDCalc(set, actual);
+	static volatile int16_t set = 220;
+	static volatile int16_t actual = 0;
+	pid_control_output = PIDCalc(set, actual);
 }
 
-void PIDCalc(int16_t set_point, int16_t actual_measurement){
-	static int32_t prev_error = 0;	// Q2
-	static int32_t integral = 0;	// Q16
-	int32_t error = 0;				// Q2
-	int32_t derivative = 0;			// Q16
-	int32_t output = 0;				// Q16
-	int32_t kif = (ki * (int32_t)dt) >> 16;  // Q16 - Scale then integrate
+int32_t clamp(int32_t input, int32_t min, int32_t max){
+	if(input >= max){
+		return max;
+	} else if(input <= min){
+		return min;
+	} else {
+		return input;
+	}
+}
+
+int32_t PIDCalc(int16_t set_point, int16_t actual_measurement){
+	static int32_t prev_actual = 0;
+	static int32_t integral = 0;
+	int32_t error = 0;
+	int32_t derivative = 0;
+	int32_t kif = ((int32_t)ki * dt) >> 16;  // Scale then integrate
+	int32_t output = 0;
 	
 	// Calculate P, I, D
 	// Proportion
 	error = set_point - actual_measurement;
 	
 	// Integral
-	
-	integral += ((error) * dt) >> 2;
+	integral += (error * kif);
+
 	// Windup guard
-	if(integral < -(windup_guard)){
-		integral = -(windup_guard);
-	}else if(integral > windup_guard){
-		integral = windup_guard;
-	}
+	integral = clamp(integral, windup_guard, -windup_guard);
 	
 	// Derivative
-	derivative = ((error - prev_error) << 16) / dt;
+	derivative = ((actual_measurement - prev_actual) << 16) / dt;
 	
 	// Control output
-	pid_control_output = ((kp * error) >> 16) + ((ki * integral) >> 16) + ((kd * derivative) >> 16);
+	output = clamp(((kp * error) >> 15) + (integral >> 15) + ((kd * derivative) >> 15), 0, 255);
 	
-	// Setup prev_error for next iteration
-	prev_error = error;
+	// Setup prev_actual for next iteration
+	prev_actual = actual_measurement;
+	
+	return output;
 }

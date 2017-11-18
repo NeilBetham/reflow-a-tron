@@ -18,9 +18,9 @@
 // Scaled by Q16
 #define kp				6554	// 0.1
 #define kd				655		// 0.01
-#define ki				328		// 0.005
+#define ki				6554	// 0.1
 #define dt				655		// 0.01
-#define windup_guard	6553600	// 100 Degrees
+#define windup_guard	6553600
 
 // SPI Interface Config
 #define spi_baud 9 // (20 / (2 * 1)) - 1 = 9 => 1MHz
