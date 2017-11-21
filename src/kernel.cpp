@@ -6,14 +6,18 @@
  */ 
 #include "kernel.h"
 
+Kernel* Kernel::instance;
+
 Kernel::Kernel(){
   sub_count = 0;
+  Kernel::instance = this;
 }
 
 bool Kernel::register_for_event(IEventDelegate* delegate, EventType type){
   if(sub_count < MAX_EVENT_SUBSCRIPTION_COUNT){
     subs[sub_count].delegate = delegate;
     subs[sub_count].et = type;
+    sub_count++;
     return true;
   } else {
     return false;

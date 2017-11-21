@@ -7,13 +7,14 @@
 #include "spi.h"
 #include "avr/io.h"
 
-SPI::SPI(uint8_t* port_, uint8_t* data_dir_, uint8_t mosi_, uint8_t miso_, uint8_t sck_, uint8_t cs_){
-   port = port_;
-   data_dir = data_dir_;
-   mosi = mosi_;
-   miso = miso_;
-   sck = sck_;
-   cs = cs_;
+
+SPI::SPI(){
+  port = &PORTB;
+  data_dir = &DDRB;
+  mosi = DDB5;
+  miso = DDB6;
+  sck = DDB7;
+  cs = DDB4;
   
   // Configure data direction on specified port
   *data_dir |= (
@@ -22,15 +23,20 @@ SPI::SPI(uint8_t* port_, uint8_t* data_dir_, uint8_t mosi_, uint8_t miso_, uint8
     (1UL << mosi)
   );
   
+  PORTB |= (1UL << cs);
+  
   // Configure SPI interface
   SPCR = (
-    (1<<SPE)|               // SPI Enable
-    //(0<<SPIE)|              // SPI Interupt Enable
-    (0<<DORD)|              // Data Order (0:MSB first / 1:LSB first)
-    (1<<MSTR)|              // Master/Slave select
-    (0<<SPR1)|(1<<SPR0)|    // SPI Clock Rate
-    (0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
-    (0<<CPHA)				// Clock Phase (0:leading / 1:trailing edge sampling)
+    (1 << SPE) |               // SPI Enable
+    (0 << DORD) |              // Data Order (0:MSB first / 1:LSB first)
+    (1 << MSTR) |              // Master/Slave select
+    (0 << SPR1) | (1 << SPR0) |    // SPI Clock Rate
+    (0 << CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
+    (0 << CPHA)				// Clock Phase (0:leading / 1:trailing edge sampling)
+  );
+  
+  SPSR = (
+    (1UL << SPI2X)
   );
 }
 
@@ -53,9 +59,9 @@ uint8_t SPI::write_bytes(void* input_buffer, void* out_buffer, uint8_t count){
 }
 
 void SPI::cs_enable(){
-  *port |= (1UL << cs);
+  *port &= ~(1UL << cs);
 }
 
 void SPI::cs_disable(){
-  *port &= ~(1UL << cs);
+  *port |= (1UL << cs);
 }

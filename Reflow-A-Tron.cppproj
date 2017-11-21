@@ -176,6 +176,9 @@
     <Compile Include="include\events.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\event_timer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\i_byte_receiver.h">
       <SubType>compile</SubType>
     </Compile>
@@ -200,10 +203,16 @@
     <Compile Include="include\ring_buffer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\serial_manager.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\spi.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\tc.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\tc_poller.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\ticker.h">
@@ -221,6 +230,9 @@
     <Compile Include="src\commander.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\event_timer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\kernel.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -233,10 +245,16 @@
     <Compile Include="src\ring_buffer.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\serial_manager.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\spi.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\tc.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\tc_poller.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ticker.cpp">

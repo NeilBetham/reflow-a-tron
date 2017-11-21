@@ -7,6 +7,6 @@
 #include "tc.h"
 
 void TC::parse_temp(uint8_t* buf, TempReading* reading){
-  reading->temp = (buf[0] & 0xF4) | ((buf[1] & 0x3F) << 8);
-  reading->tc_connnected = (buf[0] & 0x04) > 0;
+  reading->temp = (buf[1] & 0xF8) >> 3 | ((buf[0] & 0x7F) << 5);
+  reading->tc_connnected = (buf[1] & 0x04) == 0;
 }

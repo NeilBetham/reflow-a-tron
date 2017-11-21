@@ -17,13 +17,17 @@
 
 class Ticker {
 public:
+  Ticker();
   Ticker(uint8_t clock_pre_scale, uint16_t tick_period);
-  ~Ticker();
+  ~Ticker() {};
   void start();
   void stop();
   bool register_delegate(ITickee* delegate);
 
 private:
+  void disable_interrupts();
+  void enable_interrupts();
+
   ITickee* delegates[MAX_DELEGATE_COUNT];
   uint8_t delegate_count;
   bool stopped;

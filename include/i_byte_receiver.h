@@ -19,9 +19,8 @@ typedef enum {
 
 class IByteReceiver {
 public:
-  virtual ~IByteReceiver();
-  virtual void handle_bytes(uint8_t byte);
-  virtual void handle_uart_error(UARTError error);
+  virtual void handle_bytes(uint8_t byte) = 0;
+  virtual void handle_uart_error(UARTError error) = 0;
 };
 
 

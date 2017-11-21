@@ -13,14 +13,15 @@
 
 class IEventDelegate {
 public:
-  virtual void on_onems(void* data);
-  virtual void on_tenms(void* data);
-  virtual void on_hunderedms(void* data);
-  virtual void on_fivehunderedms(void* data);
-  virtual void on_ones(void* data);
-  virtual void on_char_recv(void* data);
-  virtual void on_line_recv(void* data);
-  virtual void on_fault (void* data);
+  virtual void on_onems(void* data) {};
+  virtual void on_tenms(void* data) {};
+  virtual void on_hunderedms(void* data) {};
+  virtual void on_fivehunderedms(void* data) {};
+  virtual void on_ones(void* data) {};
+  virtual void on_char_recv(void* data) {};
+  virtual void on_line_recv(void* data) {};
+  virtual void on_temp_recv(void* data) {};
+  virtual void on_fault (void* data) {};
 };
 
 typedef void (IEventDelegate::*Callback)(void* data);
@@ -32,6 +33,7 @@ const Callback cb_functions[event_count] = {
   &IEventDelegate::on_ones,
   &IEventDelegate::on_char_recv,
   &IEventDelegate::on_line_recv,
+  &IEventDelegate::on_temp_recv,
   &IEventDelegate::on_fault
 };
 

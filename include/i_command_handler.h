@@ -11,7 +11,7 @@
 
 class ICommandHandler {
 public:
-  virtual bool handle_command(const char* command);  
+  virtual bool handle_command(const char* command) = 0;  
 };
 
 

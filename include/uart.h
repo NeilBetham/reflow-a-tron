@@ -17,13 +17,17 @@
 
 class UART {
 public:
-  UART(IByteReceiver* delegate);
-  ~UART();
+  UART();
+  ~UART() {};
   
   uint8_t send_now(uint8_t* buf, uint8_t count);
   uint8_t read_now(uint8_t* buf, uint8_t count);
   
   bool send_later(uint8_t* buffer, uint8_t count);
+  
+  void set_delegate(IByteReceiver* delegate_) { delegate = delegate_; };
+  
+  void tick();
   
   void read_ready();
   void write_ready();

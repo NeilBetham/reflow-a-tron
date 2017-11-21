@@ -24,7 +24,7 @@ typedef struct {
 class Kernel {
 public:
   Kernel();
-  ~Kernel();
+  ~Kernel() {};
 
   bool register_for_event(IEventDelegate* delegate, EventType type);
   void handle_event(EventType type, void* data);
@@ -35,7 +35,6 @@ private:
   EventSubscription subs[MAX_EVENT_SUBSCRIPTION_COUNT];
   uint8_t sub_count;
 };
-
 
 
 

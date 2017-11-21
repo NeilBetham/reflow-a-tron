@@ -10,14 +10,14 @@
 
 static UART* global_handler = 0;
 
-UART::UART(IByteReceiver* delegate_){
-  delegate = delegate_;
-
+UART::UART(){
+  delegate = 0;
   error = uart_no_error;
   
   global_handler = this;
-  recv.setup((uint8_t*)&recv_buf, UART_BUFFER_SIZE);
-  send.setup((uint8_t*)&send_buf, UART_BUFFER_SIZE);
+  
+  recv = RingBuffer((uint8_t*)&recv_buf, UART_BUFFER_SIZE);
+  send = RingBuffer((uint8_t*)&send_buf, UART_BUFFER_SIZE);
   
   // Configure the baud rate
   UBRR0 = 129;  // 9600 Buad
@@ -66,7 +66,23 @@ bool UART::send_later(uint8_t* buffer, uint8_t count){
   return true;
 }
 
-
+void UART::tick(){
+  if(recv.stored_elements() == 0){
+    return;
+  }
+  
+  for(int i = 0; i < 10; i++){
+    uint8_t elem;
+    
+    if(!recv.get_element(&elem)){
+      break;
+    }
+    
+    if(delegate){
+      delegate->handle_bytes(elem);
+    }      
+  }
+}
 
 void UART::read_ready(){
   if(!recv.store_element(UDR0)){
@@ -76,9 +92,10 @@ void UART::read_ready(){
 
 
 void UART::write_ready(){
-  uint8_t to_send = 0;
-  if(!recv.get_element(&to_send)){
+  uint8_t to_send;
+  if(!send.get_element(&to_send)){
     disable_send_interrupt();
+    return;
   }
   
   UDR0 = to_send;
@@ -104,17 +121,21 @@ void UART::enable_send_interrupt(){
 
 
 ISR(USART0_RX_vect){
+  cli();
   if(!global_handler){
     return;
   }
   
   global_handler->read_ready();
+  sei();
 }
 
 ISR(USART0_UDRE_vect){
+  cli();
   if(!global_handler){
     return;
   }
   
   global_handler->write_ready();
+  sei();
 }

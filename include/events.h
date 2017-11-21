@@ -18,6 +18,7 @@ enum EventType {
   ones,
   char_recv,
   line_recv,
+  temp_recv,
   fault,
   event_count
 };

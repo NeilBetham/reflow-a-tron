@@ -8,11 +8,6 @@
 #include "ring_buffer.h"
 
 
-void RingBuffer::setup(uint8_t* managed_buffer, uint16_t capacity_){
-  buf = managed_buffer;
-  capacity = capacity_;
-}
-
 bool RingBuffer::store_element(uint8_t data){
   if(next_slot() < 0){
     return false;

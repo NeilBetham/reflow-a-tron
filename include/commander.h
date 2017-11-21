@@ -18,12 +18,11 @@
 #include "i_byte_receiver.h"
 #include "i_event_delegate.h"
 
-class Commander : public IByteReceiver, public IEventDelegate {
+class Commander : public IEventDelegate {
 public:
   Commander();
   ~Commander();
-  void handle_bytes(uint8_t byte);
-  void handle_uart_error(UARTError error);
+  void on_char_recv(void* data);
   
   void on_hunderedms(void* data);
   void on_fault(void* data);

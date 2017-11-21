@@ -13,7 +13,6 @@ class RingBuffer {
 public:
   RingBuffer(): buf(0), capacity(0), head(0), tail(0) {};
   RingBuffer(uint8_t* managed_buffer, uint16_t capacity): buf(managed_buffer), capacity(capacity), head(0), tail(0) {};
-  void setup(uint8_t* managed_buffer, uint16_t capacity);
   bool store_element(uint8_t data);
   bool get_element(uint8_t* buf);
   uint16_t slots_available();
@@ -22,9 +21,8 @@ public:
 private:
   uint8_t* buf;
   uint16_t capacity;
-  uint16_t head;
-  uint16_t tail;
-  
+  int32_t head;
+  int32_t tail;
   
   int32_t next_slot();
 };

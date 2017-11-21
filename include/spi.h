@@ -13,16 +13,15 @@
 
 class SPI {
 public:
-  SPI(uint8_t* port, uint8_t* data_dir, uint8_t mosi, uint8_t miso, uint8_t sck, uint8_t cs);
-  ~SPI();
+  SPI();
+  ~SPI() {};
   
-  void init();
   uint8_t read_bytes(void* buffer, uint8_t count);
   uint8_t write_bytes(void* input_buffer, void* output_buffer, uint8_t count);
   
 private:
-  uint8_t* port;
-  uint8_t* data_dir;
+  volatile uint8_t* port;
+  volatile uint8_t* data_dir;
   
   uint8_t mosi;
   uint8_t miso;

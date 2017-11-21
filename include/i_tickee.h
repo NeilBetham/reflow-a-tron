@@ -11,8 +11,7 @@
 
 class ITickee {
 public:
-  virtual ~ITickee();
-  virtual void tick();
+  virtual void tick() = 0;
 };
 
 #endif /* I_TICKEE_H_ */

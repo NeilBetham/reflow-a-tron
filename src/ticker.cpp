@@ -22,8 +22,7 @@ Ticker::Ticker(uint8_t clock_pre_scale, uint16_t tick_period){
 }
 
 void Ticker::start(){
-  // Enable interrupts on capture and compare A
-  TIMSK1 |= (1UL << 2);
+  enable_interrupts();
 
   // Clear stopped flag
   stopped = false;
@@ -39,8 +38,8 @@ void Ticker::start(){
 
 void Ticker::stop(){
   // Disable interrupts on capture and compare A
-  TIMSK1 &= ~(1UL << 2);
-  stopped = false;
+  disable_interrupts();
+  stopped = true;
 }
 
 bool Ticker::register_delegate(ITickee* delegate){
@@ -51,6 +50,14 @@ bool Ticker::register_delegate(ITickee* delegate){
   } else {
     return false;
   }
+}
+
+void Ticker::enable_interrupts(){
+  TIMSK1 |= (1UL << OCIE1A);
+}
+
+void Ticker::disable_interrupts(){
+  TIMSK1 &= ~(1UL << OCIE1A);
 }
 
 ISR(TIMER1_COMPA_vect){
