@@ -11,15 +11,13 @@
 #include "event_timer.h"
 #include "serial_manager.h"
 #include "tc_poller.h"
+#include "commander.h"
 
 #define TIMER_CLOCK_PRESCALE 0x04   // Pre-scale 20MHz io clock by 1024
 #define TIMER_CLOCK_PERIOD 0x004e   // ( 20MHz / 1024 ) / 0x0013 = 1.001 KHz aka 1ms
 
 int main(void)
 {
-  // Disable WD
-  
-  
   // Initialize the kernel
   Kernel kernel;
   
@@ -36,6 +34,12 @@ int main(void)
   // Setup TC Polling
   TCPoller tc_poller;
   kernel.register_for_event(&tc_poller, fivehunderedms);
+  
+  // Setup commander
+  Commander commander;
+  kernel.register_for_event(&commander, char_recv);
+  kernel.register_for_event(&commander, hunderedms);
+  kernel.register_for_event(&commander, fault);
   
   // Enable interrupts
   sei();

@@ -12,15 +12,20 @@
 
 TCPoller::TCPoller(){
   spi = SPI();
+  faulted = false;
 }
 
 void TCPoller::on_fivehunderedms(void* data){
+  if(faulted){
+    return;
+  }
   uint8_t buf[2] = {0};
   spi.read_bytes((uint8_t*)&buf, 2);
   TC::parse_temp((uint8_t*)&buf, (TempReading*)&temp);
   
   if(!temp.tc_connnected){
     char msg[] = "Thermocouple Disconnected";
+    faulted = true;
     KERN->handle_event(fault, &msg);
     return;
   } else {

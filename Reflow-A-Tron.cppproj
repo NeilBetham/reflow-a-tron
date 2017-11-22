@@ -170,6 +170,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="include\coefficient_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\commander.h">
       <SubType>compile</SubType>
     </Compile>
@@ -197,7 +200,13 @@
     <Compile Include="include\pid.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\profile_segment.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\pwm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\reflow_profile.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\ring_buffer.h">
@@ -227,6 +236,9 @@
     <Compile Include="main.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\coefficient_handler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\commander.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -239,7 +251,13 @@
     <Compile Include="src\pid.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\profile_segment.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\pwm.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\reflow_profile.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ring_buffer.cpp">

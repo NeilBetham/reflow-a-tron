@@ -9,17 +9,37 @@
 
 
 bool RingBuffer::store_element(uint8_t data){
-  if(next_slot() < 0){
+  if(occupancy == capacity){
     return false;
   }
   
   buf[next_slot()] = data;
   head = next_slot();
+  occupancy++;
   return true;
 }
 
-bool RingBuffer::get_element(uint8_t* out_buf){
+int32_t RingBuffer::next_slot(){
+  int32_t next = 0;
   if(head == tail){
+    if(occupancy == 0){
+      return head;
+    } else {
+      return head + 1;
+    }
+  }
+  
+  if(head + 1 >= capacity){
+    next = 0;
+   } else {
+    next = head + 1;
+  }
+  
+  return next;
+}
+
+bool RingBuffer::get_element(uint8_t* out_buf){
+  if(occupancy == 0){
     return false;
   }
   
@@ -29,6 +49,8 @@ bool RingBuffer::get_element(uint8_t* out_buf){
   } else {
     tail++;
   }
+  
+  occupancy--;
   return true;
 }
 
@@ -36,25 +58,6 @@ uint16_t RingBuffer::slots_available(){
   return capacity - stored_elements();
 }
 
-int32_t RingBuffer::next_slot(){
-  int32_t next = 0;
-  if(head + 1 >= capacity){
-    next = 0;
-  } else {
-    next = head + 1;
-  }
-  
-  if(next == tail){
-    return -1;
-  } else {
-    return next;
-  }
-}
-
 uint16_t RingBuffer::stored_elements(){
-  if(head > tail){
-    return (head + 1) - tail;
-  } else {
-    return (capacity - tail) + head + 1;
-  }
+  return occupancy;
 }

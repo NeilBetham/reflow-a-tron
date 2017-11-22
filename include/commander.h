@@ -11,17 +11,15 @@
 
 #include <stdint.h>
 #include "i_command_handler.h"
+#include "i_event_delegate.h"
 
 #define COMMAND_BUFFER_SIZE 500
 #define MAX_COMMAND_HANDLERS 10
 
-#include "i_byte_receiver.h"
-#include "i_event_delegate.h"
-
 class Commander : public IEventDelegate {
 public:
   Commander();
-  ~Commander();
+  ~Commander() {};
   void on_char_recv(void* data);
   
   void on_hunderedms(void* data);

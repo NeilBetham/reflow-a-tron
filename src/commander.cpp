@@ -32,6 +32,9 @@ void Commander::on_char_recv(void* byte){
 void Commander::on_hunderedms(void* data){
 }
 
+void Commander::on_fault(void* data){
+}
+
 void Commander::process_command(){
   for(int i = 0; i < handler_count; i++){
     handlers[i]->handle_command((const char*)&incomming_buffer);

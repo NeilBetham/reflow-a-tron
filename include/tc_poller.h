@@ -21,6 +21,7 @@ public:
   void on_fivehunderedms(void* data);
   
 private:
+  bool faulted;
   SPI spi;
   TempReading temp;
 };
