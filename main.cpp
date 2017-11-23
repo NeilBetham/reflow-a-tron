@@ -12,6 +12,7 @@
 #include "serial_manager.h"
 #include "tc_poller.h"
 #include "commander.h"
+#include "temp_controller.h"
 
 #define TIMER_CLOCK_PRESCALE 0x04   // Pre-scale 20MHz io clock by 1024
 #define TIMER_CLOCK_PERIOD 0x004e   // ( 20MHz / 1024 ) / 0x0013 = 1.001 KHz aka 1ms
@@ -40,6 +41,15 @@ int main(void)
   kernel.register_for_event(&commander, char_recv);
   kernel.register_for_event(&commander, hunderedms);
   kernel.register_for_event(&commander, fault);
+  
+  // Setup temp controller
+  TempController temp_control;
+  kernel.register_for_event(&temp_control, tenms);
+  kernel.register_for_event(&temp_control, fivehunderedms);
+  kernel.register_for_event(&temp_control, fault);
+  
+  // Setup command handlers
+  
   
   // Enable interrupts
   sei();

@@ -15,15 +15,17 @@ Commander::Commander(){
 }
 
 void Commander::on_char_recv(void* byte){
-  if(!(content_length < COMMAND_BUFFER_SIZE)){
+  if(!(content_length < (COMMAND_BUFFER_SIZE - 1))){
     char msg[] = "Command buffer overflow";
     KERN->handle_event(fault, &msg);
-  } else {
-    content_length++;
+    return;
   }
-  incomming_buffer[content_length - 1] = *((uint8_t*)(byte));
   
-  if(incomming_buffer[content_length - 1] == '\n'){
+  incomming_buffer[content_length] = *((uint8_t*)(byte));
+  content_length++;
+  
+  if(incomming_buffer[content_length - 1] == '\n' || incomming_buffer[content_length - 1] == '\r'){
+    incomming_buffer[content_length] = 0;
     process_command();
     content_length = 0;
   }

@@ -13,8 +13,9 @@
 
 class PWM {
 public:
-  PWM(uint8_t* output_register, uint8_t output_pin, uint16_t period, uint16_t duty_cycle): output_register(output_register), output_pin(output_pin), period(period), duty_cycle(duty_cycle), current_count(0) {}; 
-  ~PWM();
+  PWM() {};
+  PWM(volatile uint8_t* output_register, volatile uint8_t* output_datadir, uint8_t output_pin, uint16_t period, uint16_t duty_cycle); 
+  ~PWM() {};
   
   uint16_t set_duty_cycle(uint16_t duty_cycle);
   uint16_t set_period(uint16_t period);
@@ -25,7 +26,8 @@ public:
   void tick(uint16_t dt);
   
 private:
-  uint8_t* output_register;
+  volatile uint8_t* output_register;
+  volatile uint8_t* output_datadir;
   uint8_t output_pin;
   
   uint16_t period;

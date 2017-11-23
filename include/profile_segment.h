@@ -17,7 +17,7 @@ class ProfileSegment {
   ProfileSegment(): target_temp(0), ramp_rate(0), time_ms(0), start_temp(0) {};
   ProfileSegment(const ProfileSegment& segment);
   ProfileSegment(int32_t temp_target, uint16_t ramp_rate, uint16_t time_ms): target_temp(temp_target), ramp_rate(ramp_rate), time_ms(time_ms), start_temp(0) {};
-  ~ProfileSegment();
+  ~ProfileSegment() {};
   
   uint16_t get_target_temp() { return target_temp; };
   uint16_t get_ramp_rate() { return ramp_rate; };

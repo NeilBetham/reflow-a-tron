@@ -22,7 +22,7 @@ public:
   ~ReflowProfile() {};
   
   bool add_segment(const ProfileSegment& segment);
-  int32_t get_current_setpoint(uint16_t current_temp);
+  int32_t get_current_setpoint(int16_t current_temp);
 
   void tick();
   

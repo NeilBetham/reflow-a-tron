@@ -224,6 +224,9 @@
     <Compile Include="include\tc_poller.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\temp_controller.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\ticker.h">
       <SubType>compile</SubType>
     </Compile>
@@ -273,6 +276,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\tc_poller.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\temp_controller.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\ticker.cpp">

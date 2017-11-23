@@ -22,7 +22,7 @@ void ReflowProfile::tick(){
   segment_time += dt;
 }
 
-int32_t ReflowProfile::get_current_setpoint(uint16_t current_temp){
+int32_t ReflowProfile::get_current_setpoint(int16_t current_temp){
   // Check if current segment has been initialzied, if not set it now
   if(!current_segment){
     current_segment = &segments[segment_index];
