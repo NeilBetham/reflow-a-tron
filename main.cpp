@@ -43,7 +43,7 @@ int main(void)
   SerialManager serial_manager;
   kernel.register_for_event(&serial_manager, tenms);
   kernel.register_for_event(&serial_manager, fault);
-  serial_manager.send_now("Reflow-A-Tron starting up...\n");
+  serial_manager.send_now("Reflow-A-Tron starting up...\n\r");
   
   // Setup TC Polling
   TCPoller tc_poller;
@@ -84,7 +84,7 @@ int main(void)
   leash.enable();
   
   // Start the event loops
-  serial_manager.send("Ready\n");
+  serial_manager.send("Ready\n\r");
   ticker.start();
   
   return 0;

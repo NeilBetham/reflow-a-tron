@@ -49,7 +49,7 @@ void SerialManager::on_fault(void* data){
   char prefix[] = "fault|";
   send(prefix);
   send((char*)data);
-  send("\n");
+  send("\n\r");
 }
 
 void SerialManager::handle_bytes(uint8_t byte){
@@ -63,9 +63,9 @@ void SerialManager::handle_uart_error(UARTError error){
 }
 
 void SerialManager::ok(){
-  send((char*)"ok\n");
+  send((char*)"ok\n\r");
 }
 
 void SerialManager::nok(){
-  send((char*)"nok\n");
+  send((char*)"nok\n\r");
 }

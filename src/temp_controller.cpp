@@ -20,6 +20,7 @@ TempController::TempController(SerialManager* serial_){
   current_setpoint = 0;
   output_control = 0;
   control_enabled = false;
+  faulted = false;
   
   serial = serial_;
 }
@@ -29,7 +30,7 @@ void TempController::on_tenms(void* data){
 }
 
 void TempController::on_fivehunderedms(void* data){
-  if(control_enabled){
+  if(control_enabled && !faulted){
     current_setpoint = profile.get_current_setpoint(current_temp);
     if(current_setpoint < 0){
       current_setpoint = 0;
@@ -47,6 +48,7 @@ void TempController::on_fivehunderedms(void* data){
 
 void TempController::on_fault(void* data){
   control_enabled = false;
+  faulted = true;
   pwm.set_duty_cycle(0);
 }
 
@@ -60,19 +62,19 @@ void TempController::on_ones(void* data){
   }
   
   char msg[500] = {0};
-  sprintf(msg, "status|%i,%i,%u\n", current_temp, current_setpoint, pwm.get_duty_cycle());
+  sprintf(msg, "status|%i,%i,%u\n\r", current_temp, current_setpoint, pwm.get_duty_cycle());
   serial->send((char*)&msg);
   
   memset(&msg, 0, 500);
   
   if(control_enabled){
-    sprintf(msg, "profile|%u,%lu,%u\n", profile.get_segment_index(), profile.get_total_time(), profile.get_segement_time());
+    sprintf(msg, "profile|%u,%lu,%u\n\r", profile.get_segment_index(), profile.get_total_time(), profile.get_segement_time());
     serial->send((char*)&msg);
   }
 }
 
 bool TempController::start(){
-  if(profile.get_segment_count() < 1){
+  if(profile.get_segment_count() < 1 || faulted){
     return false;
   }
   

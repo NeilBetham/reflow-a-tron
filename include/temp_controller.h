@@ -41,6 +41,7 @@ private:
   int16_t current_setpoint;
   int16_t output_control;
   bool control_enabled;
+  bool faulted;
   SerialManager* serial;
 };
 
