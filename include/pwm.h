@@ -20,7 +20,7 @@ public:
   uint16_t set_duty_cycle(uint16_t duty_cycle);
   uint16_t set_period(uint16_t period);
   
-  uint16_t get_duty_cycle();
+  uint16_t get_duty_cycle() { return duty_cycle; };
   uint16_t get_period();
   
   void tick(uint16_t dt);

@@ -20,6 +20,8 @@ void TCPoller::on_fivehunderedms(void* data){
     return;
   }
   uint8_t buf[2] = {0};
+  temp.tc_connnected = false;
+  temp.temp = 0xFF;
   spi.read_bytes((uint8_t*)&buf, 2);
   TC::parse_temp((uint8_t*)&buf, (TempReading*)&temp);
   

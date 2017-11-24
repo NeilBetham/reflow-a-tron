@@ -14,16 +14,19 @@
 #include "pid.h"
 #include "pwm.h"
 #include "reflow_profile.h"
+#include "serial_manager.h"
 
 
 class TempController: public IEventDelegate {
 public:
-  TempController();
+  TempController(SerialManager* serial_);
   ~TempController() {};
 
   void on_tenms(void* data);
   void on_fivehunderedms(void* data);
   void on_fault(void* data);
+  void on_temp_recv(void* data);
+  void on_ones(void* data);
   
   bool start();
   bool stop();
@@ -37,6 +40,7 @@ private:
   int16_t current_setpoint;
   int16_t output_control;
   bool control_enabled;
+  SerialManager* serial;
 };
 
 

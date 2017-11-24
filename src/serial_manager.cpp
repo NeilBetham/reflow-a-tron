@@ -46,8 +46,10 @@ void SerialManager::on_tenms(void* data){
 }
 
 void SerialManager::on_fault(void* data){
-  uint8_t msg[] = "Controller faulted";
-  uart.send_later((uint8_t*)&msg, 18);
+  char prefix[] = "fault|";
+  send(prefix);
+  send((char*)data);
+  send("\n");
 }
 
 void SerialManager::handle_bytes(uint8_t byte){

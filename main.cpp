@@ -56,10 +56,12 @@ int main(void)
   kernel.register_for_event(&commander, fault);
   
   // Setup temp controller
-  TempController temp_control;
+  TempController temp_control = TempController(&serial_manager);
   kernel.register_for_event(&temp_control, tenms);
   kernel.register_for_event(&temp_control, fivehunderedms);
   kernel.register_for_event(&temp_control, fault);
+  kernel.register_for_event(&temp_control, ones);
+  kernel.register_for_event(&temp_control, temp_recv);
   
   // Setup command handlers
   CoefficientHandler coef_handler = CoefficientHandler(&temp_control.pid);
@@ -74,7 +76,6 @@ int main(void)
   commander.register_handler(&stop_handler);
   ResetHandler reset_handler = ResetHandler(&leash);
   commander.register_handler(&reset_handler);
-  
   
   // Enable interrupts
   sei();

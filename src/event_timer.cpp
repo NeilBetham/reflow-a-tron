@@ -33,5 +33,5 @@ void EventTimer::tick(){
 }
 
 bool EventTimer::loop(uint16_t count){
-  return (count % tick_count) == 0;
+  return (tick_count % count) == 0;
 }

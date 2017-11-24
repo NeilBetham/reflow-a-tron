@@ -28,6 +28,9 @@ public:
   void tick();
   
   uint8_t get_segment_count() { return segment_count; };
+  uint32_t get_total_time() { return total_time; };
+  uint16_t get_segement_time() { return segment_time; };
+  uint8_t get_segment_index() { return segment_index; };
   
 private:
   uint16_t dt;              // ms per tick call
