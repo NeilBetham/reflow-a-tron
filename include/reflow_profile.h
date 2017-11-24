@@ -24,6 +24,7 @@ public:
   bool add_segment(const ProfileSegment& segment);
   int32_t get_current_setpoint(int16_t current_temp);
 
+  void clear_profile() { segment_count = 0; total_time = 0; segment_index = 0; segment_index = 0; current_segment = 0; };
   void tick();
   
 private:

@@ -9,6 +9,8 @@
 #ifndef I_BYTE_RECEIVER_H_
 #define I_BYTE_RECEIVER_H_
 
+#include <stdint.h>
+
 typedef enum {
   uart_no_error,
   uart_read_buffer_overrun,

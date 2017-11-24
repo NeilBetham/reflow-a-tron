@@ -14,6 +14,7 @@
 #include "commander.h"
 #include "temp_controller.h"
 #include "coefficient_handler.h"
+#include "clear_handler.h"
 
 #define TIMER_CLOCK_PRESCALE 0x04   // Pre-scale 20MHz io clock by 1024
 #define TIMER_CLOCK_PERIOD 0x004e   // ( 20MHz / 1024 ) / 0x0013 = 1.001 KHz aka 1ms
@@ -52,6 +53,8 @@ int main(void)
   // Setup command handlers
   CoefficientHandler coef_handler = CoefficientHandler(&temp_control.pid);
   commander.register_handler(&coef_handler);
+  ClearHandler clear_handler = ClearHandler(&(temp_control.profile));
+  commander.register_handler(&clear_handler);
   
   // Enable interrupts
   sei();

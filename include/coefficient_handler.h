@@ -12,7 +12,7 @@
 #include "i_command_handler.h"
 #include "pid.h"
 #include "kernel.h"
-#include "serial_manager.h"
+
 
 class CoefficientHandler: public ICommandHandler {
 public:

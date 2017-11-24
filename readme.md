@@ -32,8 +32,8 @@ status as well as if any faults occur.
   * `ki` - The integral coefficient in Q15
   * `kd` - The derivate coefficient in Q15
 2. `clear_profile` - This clears the currently stored profile.
-3. `set_segment|index,target_temp,ramp_rate,time_ms` - This sets the parameters
-for a given segment in the reflow profile.
+3. `add_segment|target_temp,ramp_rate,time_ms` - This adds another segment to
+to the reflow profile with the given parameters
   * `index` - The index of these parameters in the reflow profile
   * `target_temp` - The target temp integer for the segment in Q12
   * `ramp_rate` - The number of milliseconds per degree C

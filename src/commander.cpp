@@ -55,7 +55,7 @@ void Commander::process_command(){
   memcpy(&total, &incomming_buffer, COMMAND_BUFFER_SIZE);
   
   char* args_ptr = (char*)&total;
-  char* command_ptr = strsep(&args_ptr,"|");
+  char* command_ptr = strsep(&args_ptr,"|\r\n");
   
   
   for(int i = 0; i < handler_count; i++){
