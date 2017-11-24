@@ -13,7 +13,7 @@
 
 
 class ProfileSegment {
-  public:
+public:
   ProfileSegment(): target_temp(0), ramp_rate(0), time_ms(0), start_temp(0) {};
   ProfileSegment(const ProfileSegment& segment);
   ProfileSegment(int32_t temp_target, uint16_t ramp_rate, uint16_t time_ms): target_temp(temp_target), ramp_rate(ramp_rate), time_ms(time_ms), start_temp(0) {};
@@ -27,7 +27,7 @@ class ProfileSegment {
   
   int32_t temp_for_time(uint16_t time);
   
-  private:
+private:
   int32_t target_temp;
   uint16_t ramp_rate;     // ms per C
   uint16_t time_ms;

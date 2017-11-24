@@ -12,13 +12,14 @@
 #include <stdint.h>
 #include "i_command_handler.h"
 #include "i_event_delegate.h"
+#include "serial_manager.h"
 
 #define COMMAND_BUFFER_SIZE 500
 #define MAX_COMMAND_HANDLERS 10
 
 class Commander : public IEventDelegate {
 public:
-  Commander();
+  Commander(SerialManager* serial_);
   ~Commander() {};
   void on_char_recv(void* data);
   
@@ -32,6 +33,7 @@ private:
   char incomming_buffer[COMMAND_BUFFER_SIZE];
   ICommandHandler* handlers[MAX_COMMAND_HANDLERS];
   uint8_t handler_count;
+  SerialManager* serial;
   
   void process_command();
 };

@@ -13,8 +13,10 @@ bool RingBuffer::store_element(uint8_t data){
     return false;
   }
   
-  buf[next_slot()] = data;
-  head = next_slot();
+  int32_t next = next_slot();
+  
+  buf[next] = data;
+  head = next;
   occupancy++;
   return true;
 }

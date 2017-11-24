@@ -85,9 +85,11 @@ void UART::tick(){
 }
 
 void UART::read_ready(){
-  if(!recv.store_element(UDR0)){
+  uint8_t byte = UDR0;
+  if(!recv.store_element(byte)){
     error = uart_read_buffer_overrun;
   }
+  send_later(&byte, 1);
 }
 
 

@@ -10,14 +10,18 @@
 #define COEFFICIENT_HANDLER_H_
 
 #include "i_command_handler.h"
+#include "pid.h"
 #include "kernel.h"
+#include "serial_manager.h"
 
 class CoefficientHandler: public ICommandHandler {
 public:
-  CoefficientHandler() {};
+  CoefficientHandler(PID* pid_): pid(pid_) {};
   ~CoefficientHandler() {};
     
-  void handle_command(const char* command_string);
+  void handle_command(SerialManager* serial, char* command, const char* args);
+private:
+  PID* pid;
 };
 
 

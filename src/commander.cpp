@@ -5,13 +5,25 @@
  *  Author: nbeth
  */
 #include <string.h>
+#include <stdio.h>
 #include "commander.h"
 #include "kernel.h"
 
-Commander::Commander(){
+Commander::Commander(SerialManager* serial_){
   content_length = 0;
   memset(&incomming_buffer, 0, COMMAND_BUFFER_SIZE);
   handler_count = 0;
+  serial = serial_;
+}
+
+bool Commander::register_handler(ICommandHandler* handler){
+  if(handler_count == MAX_COMMAND_HANDLERS){
+    return false;
+  }
+  
+  handlers[handler_count] = handler;
+  handler_count++;
+  return true;
 }
 
 void Commander::on_char_recv(void* byte){
@@ -38,7 +50,15 @@ void Commander::on_fault(void* data){
 }
 
 void Commander::process_command(){
+  char total[COMMAND_BUFFER_SIZE] = {0};
+  
+  memcpy(&total, &incomming_buffer, COMMAND_BUFFER_SIZE);
+  
+  char* args_ptr = (char*)&total;
+  char* command_ptr = strsep(&args_ptr,"|");
+  
+  
   for(int i = 0; i < handler_count; i++){
-    handlers[i]->handle_command((const char*)&incomming_buffer);
-  }    
+    handlers[i]->handle_command(serial, command_ptr, args_ptr);
+  }
 }  

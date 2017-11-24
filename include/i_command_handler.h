@@ -9,9 +9,11 @@
 #ifndef I_COMMAND_HANDLER_H_
 #define I_COMMAND_HANDLER_H_
 
+#include "serial_manager.h"
+
 class ICommandHandler {
 public:
-  virtual void handle_command(const char* command_string) = 0;
+  virtual void handle_command(SerialManager* serial, char* command, const char* args) = 0;
 };
 
 
