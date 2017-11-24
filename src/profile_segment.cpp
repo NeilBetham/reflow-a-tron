@@ -14,13 +14,13 @@ ProfileSegment::ProfileSegment(const ProfileSegment& segment){
 }
 
 int32_t ProfileSegment::temp_for_time(uint16_t time){
+  if(time >= time_s){
+    return -1;
+  }
+  
   if(ramp_rate == 0){
     return target_temp;
   }
   
-  if(time > time_s){
-    return -1;
-  }
-  
-  return clamp((time / ramp_rate) + start_temp, 0, target_temp);
+  return clamp((time * ramp_rate) + start_temp, 0, target_temp);
 }

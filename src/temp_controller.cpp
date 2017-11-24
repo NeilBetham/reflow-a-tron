@@ -21,8 +21,6 @@ TempController::TempController(SerialManager* serial_){
   output_control = 0;
   control_enabled = false;
   
-  
-  
   serial = serial_;
 }
 
@@ -34,6 +32,7 @@ void TempController::on_fivehunderedms(void* data){
   if(control_enabled){
     current_setpoint = profile.get_current_setpoint(current_temp);
     if(current_setpoint < 0){
+      current_setpoint = 0;
       pwm.set_duty_cycle(0);
       control_enabled = false;
       return;

@@ -34,12 +34,13 @@ int32_t ReflowProfile::get_current_setpoint(int16_t current_temp){
   
   // If the segment returns -1 then it is complete
   if(target_temp < 0){
-    // Get an estimated amount of time that we should have been executing the new stage for
-    uint16_t next_segment_time = segment_time - current_segment->get_time();
+    segment_index++;
     
     // If we have another segment to execute, load it and return it's set point
     if(segment_index < segment_count){
-      segment_index++;
+      // Get an estimated amount of time that we should have been executing the new stage for
+      uint16_t next_segment_time = segment_time - current_segment->get_time();
+      
       current_segment++;
       
       current_segment->set_start_temp(current_temp);
