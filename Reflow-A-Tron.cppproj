@@ -170,6 +170,9 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="include\add_segment_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\clear_handler.h">
       <SubType>compile</SubType>
     </Compile>
@@ -240,6 +243,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\add_segment_handler.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\clear_handler.cpp">
