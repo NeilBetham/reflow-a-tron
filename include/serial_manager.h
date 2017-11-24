@@ -19,6 +19,9 @@ public:
   
   bool send(uint8_t* buf, uint16_t count);
   bool send(char* buf);
+  bool send(const char* buf) { return send((char*)buf); };
+  bool send_now(char* buf);
+  bool send_now(const char* buf) { return send_now((char*)buf); };
   
   void on_tenms(void* data);
   void on_fault(void* data);

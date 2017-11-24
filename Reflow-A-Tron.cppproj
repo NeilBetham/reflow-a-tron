@@ -203,6 +203,9 @@
     <Compile Include="include\kernel.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\leash.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\pid.h">
       <SubType>compile</SubType>
     </Compile>
@@ -215,6 +218,9 @@
     <Compile Include="include\reflow_profile.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="include\reset_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="include\ring_buffer.h">
       <SubType>compile</SubType>
     </Compile>
@@ -222,6 +228,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\spi.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\start_handler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="include\stop_handler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="include\tc.h">
@@ -263,6 +275,9 @@
     <Compile Include="src\kernel.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\leash.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\pid.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -275,6 +290,9 @@
     <Compile Include="src\reflow_profile.cpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\reset_handler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ring_buffer.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -282,6 +300,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\spi.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\start_handler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\stop_handler.cpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\tc.cpp">

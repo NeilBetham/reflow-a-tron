@@ -30,6 +30,17 @@ bool SerialManager::send(char* buf){
   return uart.send_later((uint8_t*)buf, count);
 }
 
+bool SerialManager::send_now(char* buf){
+  uint16_t count = 0;
+  for(int i = 0; i < UART_BUFFER_SIZE; i++){
+    if(buf[i] == 0){
+      count = i;
+      break;
+    }
+  }
+  return uart.send_now((uint8_t*)buf, count);
+}
+
 void SerialManager::on_tenms(void* data){
   uart.tick();
 }

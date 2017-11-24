@@ -27,6 +27,8 @@ public:
   void clear_profile() { segment_count = 0; total_time = 0; segment_index = 0; segment_index = 0; current_segment = 0; };
   void tick();
   
+  uint8_t get_segment_count() { return segment_count; };
+  
 private:
   uint16_t dt;              // ms per tick call
   uint8_t segment_count;

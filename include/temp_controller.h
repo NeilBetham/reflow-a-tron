@@ -25,8 +25,8 @@ public:
   void on_fivehunderedms(void* data);
   void on_fault(void* data);
   
-  bool start() { control_enabled = true; return control_enabled; }
-  bool stop() { control_enabled = false; return !control_enabled; }
+  bool start();
+  bool stop();
 
   ReflowProfile profile;
   PID pid;

@@ -40,3 +40,17 @@ void TempController::on_fivehunderedms(void* data){
 void TempController::on_fault(void* data){
   control_enabled = false;
 }
+
+bool TempController::start(){
+  if(profile.get_segment_count() < 1){
+    return false;
+  }
+  
+  control_enabled = true;
+  return control_enabled;
+}
+
+bool TempController::stop(){
+  control_enabled = false;
+  return !control_enabled;
+}
