@@ -14,9 +14,9 @@ void CoefficientHandler::handle_command(SerialManager* serial, char* command, co
     return;
   }
   
-  uint32_t kp = 0, ki = 0, kd = 0;
+  int32_t kp = 0, ki = 0, kd = 0;
   
-  uint8_t scanned_args = sscanf(args, "%lu,%lu,%lu", &kp, &ki, &kd);
+  uint8_t scanned_args = sscanf(args, "%li,%li,%li", &kp, &ki, &kd);
   
   if(scanned_args != 3){
     serial->nok();

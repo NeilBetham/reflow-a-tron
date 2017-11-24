@@ -11,7 +11,7 @@
 
 TempController::TempController(SerialManager* serial_){
   pwm = PWM(&PORTA, &DDRA, 0, TEMP_CONTROLLER_PWM_PERIOD, 0);
-  pid = PID(&current_temp, &output_control, &current_setpoint, 500);
+  pid = PID(&current_temp, &output_control, &current_setpoint, 32768);
   profile = ReflowProfile(1);
   
   pid.set_limits(0, TEMP_CONTROLLER_PWM_PERIOD);
