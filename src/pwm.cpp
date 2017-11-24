@@ -29,11 +29,22 @@ uint16_t PWM::set_period(uint16_t period_){
 }
 
 void PWM::tick(uint16_t dt){
-  current_count += dt;
-  if(current_count > duty_cycle){
+  if(duty_cycle == 0){
     *output_register &= ~(1UL << output_pin);
-  } else if(current_count >= period) {
-    current_count = 0;
+    return;
+  }
+  
+  if(current_count == 0){
     *output_register |= (1UL << output_pin);
+  }
+  
+  current_count += dt;
+  
+  if(current_count > duty_cycle && current_count <= period){
+    *output_register &= ~(1UL << output_pin);
+  }
+  
+  if(current_count >= period) {
+    current_count = 0;
   }
 }

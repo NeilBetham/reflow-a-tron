@@ -32,12 +32,12 @@ status as well as if any faults occur.
   * `ki` - The integral coefficient in Q15
   * `kd` - The derivate coefficient in Q15
 2. `clear_profile` - This clears the currently stored profile.
-3. `add_segment|target_temp,ramp_rate,time_ms` - This adds another segment to
+3. `add_segment|target_temp,ramp_rate,time_s` - This adds another segment to
 to the reflow profile with the given parameters
   * `index` - The index of these parameters in the reflow profile
   * `target_temp` - The target temp integer for the segment in Q12
-  * `ramp_rate` - The number of milliseconds per degree C
-  * `time_ms` - The number of milliseconds we should spend in this segment
+  * `ramp_rate` - The number of seconds per degree C
+  * `time_s` - The number of seconds we should spend in this segment
 4. `start` - Start controlling to the
 5. `stop` - Stop controlling the output
 6. `reset` - Resets the entire controller
@@ -52,9 +52,9 @@ while the controller is running
 2. `profile|index,elapsed_time,segment_elapsed_time` - Sent periodically during
 the execution of a reflow profile
   * `index` - The current profile segment being executed
-  * `elapsed_time` - The time in milliseconds that the current profile has
+  * `elapsed_time` - The time in seconds that the current profile has
   been executing
-  * `segment_elapsed_time` - The time in milliseconds that the current segment
+  * `segment_elapsed_time` - The time in seconds that the current segment
   has been executing
 3. `fault|reason` - Sent immediately after a fault has occurred
   * `reason` - A string indicating the reason for the fault

@@ -5,12 +5,12 @@
  *  Author: nbeth
  */ 
 #include "profile_segment.h"
-
+#include "utils.h"
 
 ProfileSegment::ProfileSegment(const ProfileSegment& segment){
   target_temp = segment.target_temp;
   ramp_rate = segment.ramp_rate;
-  time_ms = segment.time_ms;
+  time_s = segment.time_s;
 }
 
 int32_t ProfileSegment::temp_for_time(uint16_t time){
@@ -18,9 +18,9 @@ int32_t ProfileSegment::temp_for_time(uint16_t time){
     return target_temp;
   }
   
-  if(time > time_ms){
+  if(time > time_s){
     return -1;
   }
   
-  return (time / ramp_rate) + start_temp;
+  return clamp((time / ramp_rate) + start_temp, 0, target_temp);
 }

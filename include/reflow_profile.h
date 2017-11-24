@@ -23,6 +23,7 @@ public:
   
   bool add_segment(const ProfileSegment& segment);
   int32_t get_current_setpoint(int16_t current_temp);
+  void reset() { total_time = 0; segment_time = 0; segment_index = 0; current_segment = 0; };
 
   void clear_profile() { segment_count = 0; total_time = 0; segment_index = 0; segment_index = 0; current_segment = 0; };
   void tick();
@@ -33,7 +34,7 @@ public:
   uint8_t get_segment_index() { return segment_index; };
   
 private:
-  uint16_t dt;              // ms per tick call
+  uint16_t dt;              // s per tick call
   uint8_t segment_count;
   uint32_t total_time;
   uint16_t segment_time;

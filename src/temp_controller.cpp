@@ -6,16 +6,22 @@
  */ 
 #include <avr/io.h>
 #include <stdio.h>
+#include <string.h>
 #include "temp_controller.h"
 
 TempController::TempController(SerialManager* serial_){
-  pwm = PWM(&PORTA, &DDRA, 0, 1000, 0);
-  pid = PID(&current_temp, &output_control, &current_setpoint, 10);
+  pwm = PWM(&PORTA, &DDRA, 0, TEMP_CONTROLLER_PWM_PERIOD, 0);
+  pid = PID(&current_temp, &output_control, &current_setpoint, 500);
+  profile = ReflowProfile(1);
+  
+  pid.set_limits(0, TEMP_CONTROLLER_PWM_PERIOD);
   
   current_temp = 0;
   current_setpoint = 0;
   output_control = 0;
   control_enabled = false;
+  
+  
   
   serial = serial_;
 }
@@ -50,10 +56,16 @@ void TempController::on_temp_recv(void* data){
 }
 
 void TempController::on_ones(void* data){
+  if(control_enabled){
+    profile.tick();
+  }
+  
   char msg[500] = {0};
   sprintf(msg, "status|%i,%i,%u\n", current_temp, current_setpoint, pwm.get_duty_cycle());
   serial->send((char*)&msg);
-    
+  
+  memset(&msg, 0, 500);
+  
   if(control_enabled){
     sprintf(msg, "profile|%u,%lu,%u\n", profile.get_segment_index(), profile.get_total_time(), profile.get_segement_time());
     serial->send((char*)&msg);
@@ -64,6 +76,8 @@ bool TempController::start(){
   if(profile.get_segment_count() < 1){
     return false;
   }
+  
+  profile.reset();
   
   control_enabled = true;
   return control_enabled;

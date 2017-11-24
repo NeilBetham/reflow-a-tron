@@ -16,6 +16,7 @@
 #include "reflow_profile.h"
 #include "serial_manager.h"
 
+#define TEMP_CONTROLLER_PWM_PERIOD 100
 
 class TempController: public IEventDelegate {
 public:
