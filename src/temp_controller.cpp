@@ -11,10 +11,11 @@
 
 TempController::TempController(SerialManager* serial_){
   pwm = PWM(&PORTA, &DDRA, 0, TEMP_CONTROLLER_PWM_PERIOD, 0);
-  pid = PID(&current_temp, &output_control, &current_setpoint, 32768);
+  pid = PID(&current_temp, &output_control, &current_setpoint, 2048);
   profile = ReflowProfile(1);
   
   pid.set_limits(0, TEMP_CONTROLLER_PWM_PERIOD);
+  pid.set_coef(32768, 50, 6553);
   
   current_temp = 0;
   current_setpoint = 0;
@@ -62,11 +63,11 @@ void TempController::on_ones(void* data){
   }
   
   char msg[500] = {0};
+  memset(&msg, 0, 500);
   sprintf(msg, "status|%i,%i,%u\n\r", current_temp, current_setpoint, pwm.get_duty_cycle());
   serial->send((char*)&msg);
   
   memset(&msg, 0, 500);
-  
   if(control_enabled){
     sprintf(msg, "profile|%u,%lu,%u\n\r", profile.get_segment_index(), profile.get_total_time(), profile.get_segement_time());
     serial->send((char*)&msg);

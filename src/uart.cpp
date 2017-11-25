@@ -56,6 +56,7 @@ uint8_t UART::read_now(uint8_t* buf, uint8_t count){
 }
 
 bool UART::send_later(uint8_t* buffer, uint8_t count){
+  cli();
   if(send.slots_available() < count){
     return false;
   }
@@ -63,6 +64,7 @@ bool UART::send_later(uint8_t* buffer, uint8_t count){
     send.store_element(buffer[i]);
   }
   enable_send_interrupt();
+  sei();
   return true;
 }
 
@@ -78,6 +80,7 @@ void UART::tick(){
       break;
     }
     
+    send_later(&elem, 1);
     if(delegate){
       delegate->handle_bytes(elem);
     }      
@@ -89,7 +92,6 @@ void UART::read_ready(){
   if(!recv.store_element(byte)){
     error = uart_read_buffer_overrun;
   }
-  send_later(&byte, 1);
 }
 
 
