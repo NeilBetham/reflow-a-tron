@@ -13,31 +13,14 @@ bool RingBuffer::store_element(uint8_t data){
     return false;
   }
   
-  int32_t next = next_slot();
+  if(occupancy != 0){
+    head = next_index(head);
+  }
   
-  buf[next] = data;
-  head = next;
+  buf[head] = data;
+  
   occupancy++;
   return true;
-}
-
-int32_t RingBuffer::next_slot(){
-  int32_t next = 0;
-  if(head == tail){
-    if(occupancy == 0){
-      return head;
-    } else {
-      return head + 1;
-    }
-  }
-  
-  if(head + 1 >= capacity){
-    next = 0;
-   } else {
-    next = head + 1;
-  }
-  
-  return next;
 }
 
 bool RingBuffer::get_element(uint8_t* out_buf){
@@ -46,14 +29,20 @@ bool RingBuffer::get_element(uint8_t* out_buf){
   }
   
   *out_buf = buf[tail];
-  if(tail + 1 == capacity){
-    tail = 0;
-  } else {
-    tail++;
-  }
+  if(head != tail){
+    tail = next_index(tail);
+  }    
   
   occupancy--;
   return true;
+}
+
+int32_t RingBuffer::next_index(int32_t index){
+  if((index + 1) == capacity){
+    return 0;
+  } else {
+    return index + 1;
+  }
 }
 
 uint16_t RingBuffer::slots_available(){

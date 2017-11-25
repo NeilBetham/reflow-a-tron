@@ -16,6 +16,7 @@ TempController::TempController(SerialManager* serial_){
   
   pid.set_limits(0, TEMP_CONTROLLER_PWM_PERIOD);
   pid.set_coef(32768, 50, 6553);
+  pid.set_beta(4096);
   
   current_temp = 0;
   current_setpoint = 0;

@@ -18,14 +18,18 @@ public:
   uint16_t slots_available();
   uint16_t stored_elements();
   
+  int32_t get_head(){ return head; };
+  int32_t get_tail(){ return tail; };
+  
 private:
   uint8_t* buf;
   uint16_t capacity;
   uint16_t occupancy;
+  
   int32_t head;
   int32_t tail;
-  
-  int32_t next_slot();
+      
+  int32_t next_index(int32_t index);
 };
 
 

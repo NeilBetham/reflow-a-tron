@@ -19,6 +19,11 @@ void PID::run() {
 
 	// Derivative
 	int32_t derivative = (((int32_t)(*input) - prev_input) << 12) / dt;
+  if(prev_derivative == 0){
+    prev_derivative = derivative;
+  }
+  derivative = ((derivative * beta) + ((32768L - beta) * prev_derivative)) >> 15;
+  prev_derivative = derivative;
 
 	// Calculate the output
 	*output = clamp(((kp * error) >> 15) + (accumulator >> 15) - ((kd * derivative) >> 15) , min, max);

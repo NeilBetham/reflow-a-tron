@@ -22,16 +22,16 @@ Ticker::Ticker(uint8_t clock_pre_scale, uint16_t tick_period){
 }
 
 void Ticker::start(){
-  enable_interrupts();
-
   // Clear stopped flag
   stopped = false;
 
   // Loop through delegates
   while(!stopped){
+    disable_interrupts();
     for(int i = 0; i < delegate_count; i++){
       delegates[i]->tick();
     }
+    enable_interrupts();
     sleep();
   }
 }

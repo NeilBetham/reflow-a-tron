@@ -4,6 +4,7 @@
  * Created: 11/19/2017 6:02:19 PM
  * Author : nbeth
  */
+#include <avr/cpufunc.h>
 #include <avr/interrupt.h>
 #include <avr/wdt.h>
 #include "kernel.h"
@@ -89,4 +90,3 @@ int main(void)
   
   return 0;
 }
-

@@ -122,8 +122,6 @@ void UART::enable_send_interrupt(){
 }
 
 
-
-
 ISR(USART0_RX_vect){
   cli();
   if(!global_handler){
